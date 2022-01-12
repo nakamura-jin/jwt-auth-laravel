@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,10 @@ Route::post('menu/upload', [MenuController::class, 'upload']);
 Route::get('menu/{id}', [MenuController::class, 'show']);
 Route::put('menu/{id}', [MenuController::class, 'update']);
 Route::delete('menu/{id}', [MenuController::class, 'destroy']);
+Route::get('menu/owner/{owner_id}', [MenuController::class, 'myMenu']);
+
+//Stripe
+Route::get('checkout/{id}', [CheckoutController::class, 'checkout']);
 
 
 

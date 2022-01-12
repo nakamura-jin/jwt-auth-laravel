@@ -43,4 +43,9 @@ class Owner extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
 }

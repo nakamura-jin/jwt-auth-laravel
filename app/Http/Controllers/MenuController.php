@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Area;
 use App\Models\Genre;
+use App\Models\Owner;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,8 +35,9 @@ class MenuController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required',
-            'discription' => 'required',
+            'description' => 'required',
             'price' => 'required|numeric',
+            'owner_id' => 'required',
             'area_id' => 'required',
             'genre_id' => 'required',
             'image' => 'required',
@@ -48,7 +50,8 @@ class MenuController extends Controller
 
         Menu::create([
             'name' => $request->name,
-            'discription' => $request->discription,
+            'description' => $request->description,
+            'owner_id' => $request->owner_id,
             'area_id' => $request->area_id,
             'genre_id' => $request->genre_id,
             'price' => $request->price,
@@ -93,7 +96,8 @@ class MenuController extends Controller
             $url = $this->upload($request);
             $update = [
                 'name' => $request->name,
-                'discription' => $request->discription,
+                'description' => $request->description,
+                'owner_id' => $request->owner_id,
                 'area_id' => $request->area_id,
                 'genre_id' => $request->genre_id,
                 'price' => $request->price,
@@ -102,7 +106,8 @@ class MenuController extends Controller
         } else {
             $update = [
                 'name' => $request->name,
-                'discription' => $request->discription,
+                'description' => $request->description,
+                'owner_id' => $request->owner_id,
                 'area_id' => $request->area_id,
                 'genre_id' => $request->genre_id,
                 'price' => $request->price,
@@ -127,6 +132,25 @@ class MenuController extends Controller
             return response()->json(['message' => 'メニューを削除しました'], 201);
         } else {
             return response()->json(['message' => 'メニューを削除できませんでした'], 404);
+        }
+    }
+
+    public function myMenu($menu)
+    {
+        $items = Menu::where('owner_id', $menu)->get();
+
+        foreach ($items as $item) {
+            $area = Area::where('id', $item->area_id)->first();
+            $item->area_name = $area->name;
+
+            $genre = Genre::where('id', $item->genre_id)->first();
+            $item->genre_name = $genre->name;
+        }
+
+        if ($items) {
+            return response()->json(['data' => $items], 201);
+        } else {
+            return response()->json(['message' => 'エラーです'], 404);
         }
     }
 }

@@ -11,7 +11,7 @@ class Menu extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'discription', 'area_id', 'genre_id', 'price', 'image'];
+    protected $fillable = ['name', 'description','owner_id', 'area_id', 'genre_id', 'price', 'image'];
 
     public function tag()
     {
