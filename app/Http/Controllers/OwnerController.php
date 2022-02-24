@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Hash;
 
 class OwnerController extends Controller
 {
+    public function index() {
+        $items = Owner::all();
+        return response()->json(['data' => $items]);
+    }
+
     public function store(UserRequest $request)
     {
         $input = $request->validated();

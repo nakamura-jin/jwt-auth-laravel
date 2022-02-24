@@ -19,6 +19,8 @@ class CreateMenusTable extends Migration
             $table->string('description');
             $table->integer('price');
             $table->string('image');
+            $table->unsignedInteger('quantity');
+            $table->bigInteger('product_code');
             $table->unsignedBigInteger('owner_id');
             $table->unsignedBigInteger('area_id');
             $table->unsignedBigInteger('genre_id');

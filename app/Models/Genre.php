@@ -12,7 +12,7 @@ class Genre extends Model
 
     protected $fillable = ['name'];
 
-    public function menu()
+    public function menus()
     {
         return $this->belongsTo(Menu::class);
     }

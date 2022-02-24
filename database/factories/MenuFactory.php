@@ -20,7 +20,9 @@ class MenuFactory extends Factory
             'area_id' => $this->faker->numberBetween(1,3),
             'genre_id' => $this->faker->numberBetween(1,5),
             'price' => $this->faker->numberBetween(100, 999),
-            'image' => $this->faker->imageUrl()
+            'quantity' => 0,
+            'image' => $this->faker->imageUrl(),
+            'product_code' => $this->faker->unique()->numerify('#####')
         ];
     }
 }

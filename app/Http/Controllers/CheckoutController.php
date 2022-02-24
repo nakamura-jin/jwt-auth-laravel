@@ -12,8 +12,7 @@ class CheckoutController extends Controller
 {
     public function checkout(Request $request)
     {
-    //     // $user = User::where('id', $request->user_id)->first();
-        $menu = Menu::where('id', $request->id)->first();
+        $menu = Menu::where('id', $request->menu_id)->first();
 
         $lineItems = [
             $lineItem = [
@@ -22,21 +21,21 @@ class CheckoutController extends Controller
                 'amount' => $menu->price,
                 'currency' => 'jpy',
                 'images' => [ $menu->image ],
-                'quantity' => 1
+                'quantity' => $request->quantity
             ]
         ];
 
-        \Stripe\Stripe::setApiKey(config('stripe.ssk'));
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
         $session = \Stripe\Checkout\Session::create([
+            'customer_email' => 'pgm_eng@yahoo.co.jp',
             'payment_method_types' => ['card'],
             'mode' => 'payment',
             'line_items' => [$lineItems],
-            'success_url' => 'http://localhost:8000',
-            'cancel_url' => 'http://localhost:8000/login',
+            'success_url' => 'http://localhost:8080/purchased',
+            'cancel_url' => 'http://localhost:8080',
         ]);
 
-        // $publickey = config('stripe.public');
 
         return $session;
     }

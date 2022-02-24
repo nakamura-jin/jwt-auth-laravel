@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Owner;
 
+
+use Illuminate\Support\Facades\Password;
+
+
 class AuthController extends Controller
 {
 
